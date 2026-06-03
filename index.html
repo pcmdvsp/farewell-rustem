@@ -1,0 +1,521 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Farewell Party</title>
+
+    <style>
+      body {
+        margin: 0;
+        padding: 20px;
+        font-family:
+          Segoe UI,
+          Arial,
+          sans-serif;
+        background:
+          linear-gradient(rgba(255, 244, 248, 0.72), rgba(254, 249, 195, 0.72)),
+          url("background.jpg");
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+      }
+
+      .container {
+        max-width: 800px;
+        margin: auto;
+      }
+
+      .card {
+        background: rgba(255, 255, 255, 0.96);
+        border-radius: 24px;
+        padding: 34px;
+        box-shadow: 0 24px 70px rgba(190, 24, 93, 0.18);
+        position: relative;
+        z-index: 2;
+      }
+
+      h1 {
+        text-align: center;
+        color: #be185d;
+        margin-bottom: 10px;
+      }
+
+      .subtitle {
+        text-align: center;
+        color: #6b7280;
+        margin-bottom: 25px;
+      }
+
+      label {
+        display: block;
+        margin-top: 15px;
+        font-weight: 600;
+      }
+
+      input,
+      select,
+      textarea {
+        width: 100%;
+        box-sizing: border-box;
+        margin-top: 6px;
+        padding: 12px;
+        border: 1px solid #d1d5db;
+        border-radius: 10px;
+        font-size: 15px;
+      }
+
+      textarea {
+        min-height: 120px;
+      }
+
+      button {
+        width: 100%;
+        margin-top: 20px;
+        padding: 14px;
+        border: none;
+        border-radius: 12px;
+        background: #ec4899;
+        color: white;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+      }
+
+      button:hover {
+        background: #db2777;
+      }
+
+      .success {
+        display: none;
+        margin-top: 15px;
+        padding: 12px;
+        background: #dcfce7;
+        color: #166534;
+        border-radius: 10px;
+        text-align: center;
+      }
+
+      .stats {
+        margin-top: 25px;
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+
+      .stat-box {
+        flex: 1;
+        min-width: 120px;
+        background: #f8fafc;
+        padding: 15px;
+        border-radius: 15px;
+        text-align: center;
+      }
+
+      .stat-number {
+        font-size: 28px;
+        font-weight: bold;
+        color: #be185d;
+      }
+
+      .wish-section {
+        margin-top: 30px;
+      }
+
+      .wish-section h2 {
+        text-align: center;
+        color: #be185d;
+      }
+
+      .wish-card {
+        background: white;
+        margin-top: 15px;
+        border-radius: 15px;
+        padding: 15px;
+        box-shadow: 0 5px 12px rgba(0, 0, 0, 0.08);
+        border-left: 5px solid #ec4899;
+      }
+
+      .wish-name {
+        font-weight: bold;
+        color: #be185d;
+      }
+
+      .wish-attend {
+        margin-top: 5px;
+        font-size: 13px;
+        color: #6b7280;
+      }
+
+      .wish-message {
+        margin-top: 10px;
+        line-height: 1.5;
+      }
+
+      .footer {
+        margin-top: 25px;
+        text-align: center;
+        color: #9ca3af;
+      }
+
+      .floating-wish {
+        position: fixed;
+        right: 24px;
+        bottom: 24px;
+        width: 340px;
+        max-width: calc(100vw - 40px);
+        background: rgba(255, 255, 255, 0.92);
+        backdrop-filter: blur(12px);
+        border: 1px solid rgba(236, 72, 153, 0.25);
+        border-left: 5px solid #ec4899;
+        border-radius: 18px;
+        padding: 16px;
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.18);
+        display: flex;
+        gap: 12px;
+        z-index: 999;
+        animation: floatWish 15s ease-in-out forwards;
+      }
+
+      .floating-icon {
+        font-size: 28px;
+        line-height: 1;
+      }
+
+      .floating-title {
+        font-size: 13px;
+        color: #be185d;
+        font-weight: 700;
+        margin-bottom: 6px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+
+      .floating-message {
+        color: #374151;
+        line-height: 1.45;
+        font-size: 15px;
+      }
+
+      .floating-name {
+        margin-top: 8px;
+        color: #9d174d;
+        font-weight: bold;
+        text-align: right;
+      }
+
+      .hidden {
+        display: none;
+      }
+
+      @keyframes floatWish {
+        0% {
+          opacity: 0;
+          transform: translateY(30px) scale(0.96);
+        }
+        12% {
+          opacity: 1;
+          transform: translateY(0) scale(1);
+        }
+        90% {
+          opacity: 1;
+          transform: translateY(-8px) scale(1);
+        }
+
+        100% {
+          opacity: 0;
+          transform: translateY(-28px) scale(0.98);
+        }
+      }
+
+      @media (max-width: 600px) {
+        .floating-wish {
+          right: 16px;
+          bottom: 16px;
+          width: auto;
+          left: 16px;
+        }
+      }
+
+      .event-info {
+        margin: 22px 0;
+        padding: 18px;
+        background: rgba(255, 247, 237, 0.9);
+        border: 1px solid rgba(236, 72, 153, 0.18);
+        border-radius: 16px;
+      }
+
+      .event-info h2 {
+        margin-top: 0;
+        color: #be185d;
+        text-align: center;
+        font-size: 20px;
+      }
+
+      .info-row {
+        margin-top: 10px;
+        color: #374151;
+        font-size: 15px;
+        line-height: 1.5;
+      }
+
+      .info-label {
+        font-weight: 700;
+        color: #9d174d;
+      }
+
+      .main-layout {
+        display: flex;
+        gap: 24px;
+        align-items: flex-start;
+        justify-content: center;
+      }
+
+      .side-photo {
+        width: 26vw;
+        max-width: 500px;
+        min-width: 320px;
+        flex-shrink: 0;
+
+        position: sticky;
+        top: 24px;
+        align-self: flex-start;
+        opacity: 0.68;
+      }
+
+      .side-photo img {
+        width: 100%;
+        height: calc(100vh - 48px);
+        object-fit: cover;
+        border-radius: 24px;
+        box-shadow: 0 18px 45px rgba(0, 0, 0, 0.12);
+
+        filter: brightness(1.08) saturate(0.78) contrast(0.92);
+      }
+
+      .container {
+        max-width: 800px;
+      }
+
+      @media (max-width: 1200px) {
+        .main-layout {
+          flex-direction: column;
+          align-items: center;
+        }
+
+        .side-photo {
+          width: 280px;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="main-layout">
+      <!-- Ảnh bên trái -->
+      <div class="side-photo">
+        <img src="photo1.jpg" alt="Photo 1" />
+      </div>
+
+      <!-- Nội dung chính -->
+      <div class="container">
+        <div class="card">
+          <h1>🎉 Farewell Party for Rustem 🎉</h1>
+
+          <div class="subtitle">
+            Please confirm your attendance and leave your best wishes ❤️
+          </div>
+
+          <div class="event-info">
+            <h2>Event Details</h2>
+
+            <div class="info-row">
+              <span class="info-label">⏰ Time:</span>
+              19:00
+            </div>
+
+            <div class="info-row">
+              <span class="info-label">📅 Date:</span>
+              Thursday, 11/06/2026
+            </div>
+
+            <div class="info-row">
+              <span class="info-label">📍 Venue:</span>
+              Don Quijote Restaurant
+            </div>
+
+            <div class="info-row">
+              <span class="info-label">🏠 Address:</span>
+              36 Tran Hung Dao St., Vung Tau Ward, Ho Chi Minh City
+            </div>
+          </div>
+
+          <form id="voteForm">
+            <label>Full Name</label>
+            <input type="text" id="name" required />
+
+            <label>Will you attend?</label>
+            <select id="attend" required>
+              <option value="">-- Select --</option>
+              <option value="Tham gia">✅ Going</option>
+              <option value="Không tham gia">❌ Not Going</option>
+            </select>
+
+            <label>Leave your wishes for Rustem</label>
+            <textarea
+              id="message"
+              placeholder="Spill your heart out here ..."
+            ></textarea>
+
+            <button type="submit">Submit Response</button>
+          </form>
+
+          <div class="success" id="successMessage">
+            ✅ Thank you! Your information has been successfully recorded!
+          </div>
+
+          <div class="stats">
+            <div class="stat-box">
+              <div class="stat-number" id="joinCount">0</div>
+              <div>Tham gia</div>
+            </div>
+
+            <div class="stat-box">
+              <div class="stat-number" id="noCount">0</div>
+              <div>Không tham gia</div>
+            </div>
+          </div>
+        </div>
+
+        <div id="floatingWish" class="floating-wish hidden">
+          <div class="floating-icon">💌</div>
+          <div>
+            <div class="floating-title">Best wishes from everyone</div>
+            <div class="floating-message" id="floatingMessage"></div>
+            <div class="floating-name" id="floatingName"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Ảnh bên phải -->
+      <div class="side-photo">
+        <img src="photo2.jpg" alt="Photo 2" />
+      </div>
+    </div>
+
+    <script>
+      const scriptURL =
+        "https://script.google.com/macros/s/AKfycbzrYG3Go97ce8Aei6BQjxH9z2yYuJd6mZwIYt_XClDG1Y-oaY-Roi7tvDsDxhD_YPKu/exec";
+
+      let allWishes = [];
+      let lastWishIndex = -1;
+      window.firstWishShown = false;
+
+      document
+        .getElementById("voteForm")
+        .addEventListener("submit", async function (e) {
+          e.preventDefault();
+
+          const data = {
+            name: document.getElementById("name").value,
+            attend: document.getElementById("attend").value,
+            message: document.getElementById("message").value,
+          };
+
+          try {
+            await fetch(scriptURL, {
+              method: "POST",
+              mode: "no-cors",
+              body: JSON.stringify(data),
+            });
+
+            document.getElementById("voteForm").reset();
+
+            document.getElementById("successMessage").style.display = "block";
+
+            setTimeout(() => {
+              document.getElementById("successMessage").style.display = "none";
+            }, 3000);
+
+            setTimeout(loadWishes, 1000);
+          } catch (err) {
+            alert("Có lỗi xảy ra.");
+          }
+        });
+
+      function loadWishes() {
+        const old = document.getElementById("jsonpScript");
+
+        if (old) {
+          old.remove();
+        }
+
+        const script = document.createElement("script");
+
+        script.id = "jsonpScript";
+
+        script.src = scriptURL + "?callback=showWishes&_=" + Date.now();
+
+        document.body.appendChild(script);
+      }
+
+      function showWishes(data) {
+        let join = 0;
+        let no = 0;
+
+        data.forEach((item) => {
+          if (item.attend === "Tham gia") join++;
+          else if (item.attend === "Không tham gia") no++;
+        });
+
+        document.getElementById("joinCount").innerText = join;
+        document.getElementById("noCount").innerText = no;
+
+        allWishes = data.filter((x) => x.message && x.message.trim() !== "");
+
+        // Chỉ hiện lần đầu khi website vừa mở
+        if (!window.firstWishShown && allWishes.length > 0) {
+          window.firstWishShown = true;
+          showRandomFloatingWish();
+        }
+      }
+
+      function showRandomFloatingWish() {
+        if (!allWishes || allWishes.length === 0) {
+          return;
+        }
+
+        let randomIndex;
+
+        do {
+          randomIndex = Math.floor(Math.random() * allWishes.length);
+        } while (allWishes.length > 1 && randomIndex === lastWishIndex);
+
+        lastWishIndex = randomIndex;
+
+        const wish = allWishes[randomIndex];
+
+        const card = document.getElementById("floatingWish");
+        const message = document.getElementById("floatingMessage");
+        const name = document.getElementById("floatingName");
+
+        message.innerText = wish.message;
+        name.innerText = "— " + (wish.name || "Ẩn danh");
+
+        card.classList.remove("hidden");
+
+        card.style.animation = "none";
+        void card.offsetWidth;
+        card.style.animation = "floatWish 15s ease-in-out forwards";
+      }
+
+      loadWishes();
+
+      setInterval(() => {
+        loadWishes();
+        setTimeout(showRandomFloatingWish, 500);
+      }, 15000);
+    </script>
+  </body>
+</html>
